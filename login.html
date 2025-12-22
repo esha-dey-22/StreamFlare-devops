@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | StreamFlare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body
+  class="flex items-center justify-center h-screen bg-cover bg-center bg-no-repeat"
+  style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOR35aa3fLtK-QP7mPoz_IcF2h5WMfFcgjw&s');"
+>
+
+  <!-- Overlay for better contrast -->
+  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+  <!-- Login Card -->
+  <div class="relative bg-black bg-opacity-60 backdrop-blur-md p-8 rounded-xl shadow-2xl w-96 z-10">
+    <h2 class="text-3xl font-bold text-center text-white mb-6">
+      StreamFlare Login
+    </h2>
+
+    <!-- Email -->
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      class="w-full p-3 mb-4 rounded bg-gray-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500"
+    >
+
+    <!-- Password -->
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      class="w-full p-3 mb-6 rounded bg-gray-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500"
+    >
+
+    <!-- Login Button -->
+    <button
+      onclick="login()"
+      class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-bold transition-all duration-300"
+    >
+      Login
+    </button>
+
+    <p class="text-gray-400 text-sm text-center mt-4">
+      © 2025 StreamFlare
+    </p>
+  </div>
+
+  <!-- Login Script -->
+  <script>
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        alert("Please enter email and password");
+        return;
+      }
+
+      // Save login state
+      localStorage.setItem("isLoggedIn", "true");
+
+      // Redirect to main page
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
