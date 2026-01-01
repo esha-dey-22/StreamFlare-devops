@@ -20,41 +20,72 @@
     <div class="p-1 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 transform transition-all duration-500 hover:scale-105">
       <div class="bg-black bg-opacity-50 backdrop-blur-lg rounded-2xl p-8 w-96 shadow-2xl">
 
-    <h2 class="text-3xl font-bold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-indigo-400">
-      Welcome Back to StreamFlare
-    </h2>
+    <div class="mb-6">
+      <h2 class="text-3xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-indigo-400">
+        Welcome to StreamFlare
+      </h2>
 
-    <!-- Name -->
-    <input
-      id="name"
-      type="text"
-      placeholder="Full Name"
-      class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-    >
+      <div class="flex justify-center mb-4 space-x-2">
+        <button id="tab-login" onclick="showLogin()" class="px-4 py-2 rounded-lg bg-white bg-opacity-10 text-white font-semibold">Login</button>
+        <button id="tab-signup" onclick="showSignup()" class="px-4 py-2 rounded-lg bg-transparent text-gray-300 hover:bg-white hover:bg-opacity-5">Sign Up</button>
+      </div>
+    </div>
 
-    <!-- Email -->
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-      class="w-full p-3 mb-4 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-    >
+    <!-- Login Form -->
+    <form id="login-form" class="space-y-4">
+      <input
+        id="login-email"
+        type="email"
+        placeholder="Email"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
 
-    <!-- Password -->
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-      class="w-full p-3 mb-6 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-    >
+      <input
+        id="login-password"
+        type="password"
+        placeholder="Password"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
 
-    <!-- Login Button -->
-    <button
-      onclick="login()"
-      class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg"
-    >
-      Login
-    </button>
+      <button type="button" onclick="login()" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">Login</button>
+
+      <p class="text-gray-400 text-sm text-center mt-2">No account? <button type="button" onclick="showSignup()" class="text-pink-400 font-medium">Sign Up</button></p>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signup-form" class="space-y-4 hidden">
+      <input
+        id="signup-name"
+        type="text"
+        placeholder="Full Name"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
+
+      <input
+        id="signup-email"
+        type="email"
+        placeholder="Email"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
+
+      <input
+        id="signup-password"
+        type="password"
+        placeholder="Password"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
+
+      <input
+        id="signup-password-confirm"
+        type="password"
+        placeholder="Confirm Password"
+        class="w-full p-3 rounded-lg bg-white bg-opacity-5 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+      >
+
+      <button type="button" onclick="signup()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">Sign Up</button>
+
+      <p class="text-gray-400 text-sm text-center mt-2">Already have an account? <button type="button" onclick="showLogin()" class="text-pink-400 font-medium">Login</button></p>
+    </form>
 
     <p class="text-gray-400 text-sm text-center mt-4">
       World of Entertainment at Your Fingertips
@@ -65,24 +96,94 @@
 
   <!-- Login Script -->
   <script>
-    function login() {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+    function getUsers() {
+      return JSON.parse(localStorage.getItem('users') || '{}');
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    function showLogin() {
+      document.getElementById('login-form').classList.remove('hidden');
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('tab-login').classList.add('bg-white','bg-opacity-10');
+      document.getElementById('tab-signup').classList.remove('bg-white','bg-opacity-10');
+    }
+
+    function showSignup() {
+      document.getElementById('signup-form').classList.remove('hidden');
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('tab-signup').classList.add('bg-white','bg-opacity-10');
+      document.getElementById('tab-login').classList.remove('bg-white','bg-opacity-10');
+    }
+
+    function signup() {
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim().toLowerCase();
+      const password = document.getElementById('signup-password').value;
+      const confirm = document.getElementById('signup-password-confirm').value;
 
       if (!name || !email || !password) {
-        alert("Please enter name, email, and password");
+        alert('Please fill name, email, and password');
         return;
       }
 
-      // Save login state
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userEmail", email);
+      if (password !== confirm) {
+        alert('Passwords do not match');
+        return;
+      }
 
-      // Redirect to main page
-      window.location.href = "index.html";
+      const users = getUsers();
+      if (users[email]) {
+        alert('An account with this email already exists');
+        showLogin();
+        return;
+      }
+
+      users[email] = { name, email, password };
+      saveUsers(users);
+
+      // auto login
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userName', name);
+      localStorage.setItem('userEmail', email);
+      window.location.href = 'index.html';
     }
+
+    function login() {
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      if (!email || !password) {
+        alert('Please enter email and password');
+        return;
+      }
+
+      const users = getUsers();
+      const user = users[email];
+
+      if (!user) {
+        if (confirm('No account found for this email. Would you like to sign up?')) {
+          showSignup();
+        }
+        return;
+      }
+
+      if (user.password !== password) {
+        alert('Incorrect password');
+        return;
+      }
+
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userName', user.name);
+      localStorage.setItem('userEmail', email);
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      showLogin();
+    });
   </script>
 
 </body>
