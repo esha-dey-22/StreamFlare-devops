@@ -1,2 +1,18 @@
-# StreamFlare
-StreamFlare- The Online Entertainment Hub combines movies, music, and games into one platform, offering users a comprehensive multimedia experience. Each section—Movies, Music, and Games—provides unique content and functionality, enhancing user engagement and ensuring a dynamic, immersive experience tailored to individual interests.
+# StreamFlare (Next.js)
+
+This project has been migrated to Next.js while preserving the original static StreamFlare pages and assets.
+
+## Run locally
+
+1. Install dependencies:
+	npm install
+2. Start the dev server:
+	npm run dev
+3. Open:
+	http://localhost:3000
+
+## Notes
+
+- The original static pages are now served from the `public` directory.
+- `/` redirects to `/index.html`.
+- Friendly routes like `/about` and `/login` are rewritten to their original static pages.
